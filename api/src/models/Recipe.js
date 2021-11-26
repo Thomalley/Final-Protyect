@@ -13,10 +13,12 @@ module.exports = (sequelize) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     summary: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
     spoonacularScore: {
       type: DataTypes.STRING,

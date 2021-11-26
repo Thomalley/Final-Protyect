@@ -1,9 +1,13 @@
-import './App.css';
-
+import "./App.css";
+import Order from "./components/order";
+import Recipes from "./components/recipes";
+import SearchBar from "./components/searchBar";
 function App() {
   return (
     <div className="App">
-      <h1>Henry Food</h1>
+      <SearchBar />
+      <Order />
+      <Recipes />
     </div>
   );
 }
