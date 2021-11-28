@@ -87,7 +87,6 @@ router.get("/:idReceta", async (req, res, next) => {
         `https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${apiKey}&number=100`
       );
       recipe = result.data;
-      console.log(recipe);
     }
     res.send(recipe);
   } catch (error) {
