@@ -5,27 +5,27 @@ const router = Router();
 const { apiKey } = process.env;
 router.get("/", async (req, res, next) => {
   try {
-    // let newArray = [
-    //   "Gluten Free",
-    //   "Ketogenic",
-    //   "Vegetarian",
-    //   "Lacto-Vegetarian",
-    //   "Ovo-Vegetarian",
-    //   "Vegan",
-    //   "Pescetarian",
-    //   "Paleo",
-    //   "Primal",
-    //   "Low FODMAP",
-    //   "Whole 30",
-    // ];
+    let newArray = [
+      "Gluten Free",
+      "Ketogenic",
+      "Vegetarian",
+      "Lacto-Vegetarian",
+      "Ovo-Vegetarian",
+      "Vegan",
+      "Pescetarian",
+      "Paleo",
+      "Primal",
+      "Low FODMAP",
+      "Whole 30",
+    ];
 
-    // newArray.forEach(async (c) => {
-    //   await TypeOfDiet.create({ name: c });
-    // });
+    newArray.forEach(async (c) => {
+      await TypeOfDiet.create({ name: c });
+    });
 
-    // let results = await TypeOfDiet.findAll({});
+    let results = await TypeOfDiet.findAll({});
 
-    // res.send(results);
+    res.send(results);
 
     const dietApi = await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=40&addRecipeInformation=true`

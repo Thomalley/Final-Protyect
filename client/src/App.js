@@ -1,22 +1,14 @@
 import "./App.css";
-import Order from "./components/orderByName";
-import Recipes from "./components/recipes";
-import SearchBar from "./components/searchBar";
-import RecipeDetail from "./components/recipeDetail";
-import { Route, Switch } from "react-router";
+import Home from "./components/Home";
+import RecipeDetail from "./components/RecipeDetail";
+import LandingPage from "./components/LandingPage";
+import { Route } from "react-router";
 function App() {
   return (
     <div className="App">
-      <SearchBar />
-      <Switch>
-        <Route exact path="/">
-          <Order />
-          <Recipes />
-        </Route>
-        <Route path="/:id">
-          <RecipeDetail />
-        </Route>
-      </Switch>
+      <Route exact path="/Home" component={Home} />
+      <Route exact path="/" component={LandingPage} />
+      <Route path="Home/:id" component={RecipeDetail} />
     </div>
   );
 }

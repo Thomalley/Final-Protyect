@@ -1,14 +1,14 @@
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { searchRecipesId } from "../redux/actions/index";
-import { useSelector } from "react-redux";
-export default function RecipeDetail() {
+
+export default function RecipeDetail(props) {
   let recipeId = useSelector((state) => state.filteredRecipes);
   let dispatch = useDispatch();
-  let { id } = useParams();
   useEffect(() => {
-    dispatch(searchRecipesId(id));
+    (async () => {
+      dispatch(await searchRecipesId(props.match.params.id));
+    })();
   }, []);
   return (
     <div>

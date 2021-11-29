@@ -9,20 +9,21 @@ import { sort, sortScore } from "../redux/actions";
 
 export default function Order() {
   const dispatch = useDispatch();
-  function onSelectChange(e) {
-    if (e.target.value === ASCENDENTE || e.target.value === DESCENDENTE) {
-      dispatch(sort(e.target.value));
-    } else {
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-      dispatch(sortScore(e.target.value));
-    }
+  function onSelectAsc(e) {
+    dispatch(sort(e.target.value));
   }
-
+  function onSelectChange(e) {
+    dispatch(sortScore(e.target.value));
+  }
   return (
     <div>
+      <p>Ordenar alfabéticamente</p>
+      <select name="select" onChange={onSelectAsc}>
+        <option value={ASCENDENTE}>ascendente</option>
+        <option value={DESCENDENTE}>descendente</option>
+      </select>
+      <p>Ordenar por puntaje</p>
       <select name="select" onChange={onSelectChange}>
-        <option value={ASCENDENTE}>Alfabéticamente ascendente</option>
-        <option value={DESCENDENTE}>Alfabéticamente descendente</option>
         <option value={ASCENDENTES}>Mayor puntaje</option>
         <option value={DESCENDENTES}>Menor puntaje</option>
       </select>

@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
       });
       Promise.all([recipesApi, recipesDb]).then((r) => {
         const [recipesApi, recipesDb] = r;
-
+        console.log(recipesApi);
         let filteredRecipesApi = recipesApi.data.results.map((c) => {
           return {
             id: c.id,

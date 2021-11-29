@@ -48,11 +48,11 @@ export default function reducer(state = initialState, action) {
     case SORT_SCORE:
       let orderedScore = [...state.filteredRecipes];
       orderedScore = orderedScore.sort((a, b) => {
-        if (a.score < b.score) {
-          return action.payload === ASCENDENTES ? -1 : 1;
-        }
-        if (a.score > b.score) {
+        if (a.spoonacularScore < b.spoonacularScore) {
           return action.payload === ASCENDENTES ? 1 : -1;
+        }
+        if (a.spoonacularScore > b.spoonacularScore) {
+          return action.payload === ASCENDENTES ? -1 : 1;
         }
         return 0;
       });
