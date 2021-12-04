@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Recipe } = require("../db");
+const { Recipe, TypeOfDiets } = require("../db");
 const router = Router();
 const axios = require("axios");
 const { apiKey } = process.env;
@@ -10,7 +10,7 @@ router.get("/", async (req, res, next) => {
     let recipesDb;
     if (name) {
       recipesApi = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=${apiKey}&number=50&addRecipeInformation=true`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=${apiKey}&number=100&addRecipeInformation=true`
       );
       recipesDb = await Recipe.findAll({
         where: {
@@ -46,9 +46,11 @@ router.get("/", async (req, res, next) => {
       });
     } else {
       recipesApi = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=50&addRecipeInformation=true`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`
       );
-      recipesDb = await Recipe.findAll({});
+      recipesDb = await Recipe.findAll({
+        include: TypeOfDiets,
+      });
       Promise.all([recipesApi, recipesDb]).then((r) => {
         const [recipesApi, recipesDb] = r;
 
@@ -80,7 +82,8 @@ router.get("/:idReceta", async (req, res, next) => {
     const { idReceta } = req.params;
     let recipe;
     if (typeof idReceta === "string" && idReceta.length > 8) {
-      recipe = await Recipe.findByPk(idReceta);
+      recipe = await Recipe.findByPk(idReceta, { include: TypeOfDiets });
+      console.log(recipe);
       res.send(recipe);
     } else {
       const result = await axios.get(
@@ -96,7 +99,8 @@ router.get("/:idReceta", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { title, summary, spoonacularScore, healthScore, steps } = req.body;
+    const { title, summary, spoonacularScore, healthScore, steps, dietsID } =
+      req.body;
     const newRecipe = await Recipe.create({
       title,
       summary,
@@ -104,6 +108,7 @@ router.post("/", async (req, res, next) => {
       healthScore,
       steps,
     });
+    await newRecipe.addTypeOfDiets(dietsID);
     res.send(newRecipe);
   } catch (error) {
     next(error);

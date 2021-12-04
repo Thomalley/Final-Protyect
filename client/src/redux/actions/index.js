@@ -4,6 +4,9 @@ export const SEARCH_RECIPES = "SEARCH_RECIPES";
 export const SEARCH_RECIPES_ID = "SEARCH_RECIPES_ID";
 export const SORT = "SORT";
 export const SORT_SCORE = "SORT_SCORE";
+export const FILTER_BY_DIET = "FILTER_BY_DIET";
+export const GET_DIETS = "GET_DIETS";
+export const CHANGE_PAGE = "CHANGE_PAGE";
 export function fetchRecipes() {
   return function (dispatch) {
     axios
@@ -63,4 +66,30 @@ export function sortScore(order) {
     type: SORT_SCORE,
     payload: order,
   };
+}
+
+export function filterByDiet(payload) {
+  return {
+    type: FILTER_BY_DIET,
+    payload,
+  };
+}
+
+export function getDiets() {
+  return (dispatch) => {
+    axios
+      .get("http://localhost:3001/api/typeOfDiet")
+      .then((diets) => {
+        return dispatch({
+          type: GET_DIETS,
+          payload: diets.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+export function changePage(payload) {
+  return { type: "CHANGE_PAGE", payload };
 }

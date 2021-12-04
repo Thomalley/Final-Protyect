@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.navAll {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  padding: 8px;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  justify-content: space-around;
+  width: 100%;
+  background: #4e68db; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #86fde8,
+    #4e68db
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #86fde8,
+    #4e68db
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.navLink {
+  display: flex;
+  text-decoration: none;
+  color: black;
+}

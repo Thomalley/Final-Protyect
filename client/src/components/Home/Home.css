@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.allHome {
+  background: #4e68db; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #a5fecb,
+    #20bdff,
+    #4e68db
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #a5fecb,
+    #20bdff,
+    #4e68db
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.footer {
+  display: static;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}

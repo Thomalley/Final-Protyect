@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
-import { searchRecipesId } from "../redux/actions/index";
+import { useDispatch, useSelector } from "react-redux";
+import { searchRecipesId } from "../../redux/actions/index";
 
 export default function RecipeDetail(props) {
   let recipeId = useSelector((state) => state.filteredRecipes);
   let dispatch = useDispatch();
   useEffect(() => {
-    (async () => {
-      dispatch(await searchRecipesId(props.match.params.id));
+    (() => {
+      dispatch(searchRecipesId(props.match.params.id));
     })();
   }, []);
   return (
@@ -35,9 +35,10 @@ export default function RecipeDetail(props) {
       </p>
       <p>
         <b>Steps:</b>
-        {recipeId.analyzedInstructions
+        {recipeId.analyzedInstructions &&
+        recipeId.analyzedInstructions.length !== 0
           ? recipeId.analyzedInstructions.map((d) => d.steps.map((c) => c.step))
-          : ""}
+          : " There's no steps for this recipe"}
       </p>
     </div>
   );

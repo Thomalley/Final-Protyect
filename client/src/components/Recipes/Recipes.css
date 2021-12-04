@@ -1,0 +1,27 @@
+.todas {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 60px;
+  padding-top: 110px;
+  padding-bottom: 70px;
+  /* margin-top: 100px; */
+}
+.todas .cards {
+  margin: 0;
+  padding: 0;
+  height: 430px;
+  width: 330px;
+  border-radius: 8px;
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.25s;
+  background-color: white;
+}
+
+.todas .cards:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+}

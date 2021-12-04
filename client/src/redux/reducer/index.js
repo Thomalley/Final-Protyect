@@ -6,13 +6,19 @@ import {
   SEARCH_RECIPES_ID,
   SORT,
   SORT_SCORE,
+  FILTER_BY_DIET,
+  GET_DIETS,
+  CHANGE_PAGE,
 } from "../actions";
 
 const initialState = {
   recipes: [],
   filteredRecipes: [],
+  diets: [],
+  currentPage: 1,
+  cardsPP: 9,
 };
-export default function reducer(state = initialState, action) {
+export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_RECIPES:
       return {
@@ -30,6 +36,33 @@ export default function reducer(state = initialState, action) {
         ...state,
         filteredRecipes: action.payload,
       };
+    case GET_DIETS:
+      return {
+        ...state,
+        diets: action.payload,
+      };
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+    case FILTER_BY_DIET:
+      const recipes = state.recipes;
+      const filteredR =
+        action.payload === "all"
+          ? recipes
+          : recipes.filter((e) => e.diets.includes(action.payload));
+      if (filteredR.length > 0) {
+        return {
+          ...state,
+          filteredRecipes: filteredR,
+        };
+      } else {
+        return {
+          ...state,
+          filteredRecipes: filteredR,
+        };
+      }
     case SORT:
       let orderedRecipes = [...state.filteredRecipes];
       orderedRecipes = orderedRecipes.sort((a, b) => {

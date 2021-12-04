@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 const { Router } = require("express");
 const { TypeOfDiet } = require("../db");
 const router = Router();
-const { apiKey } = process.env;
+
 router.get("/", async (req, res, next) => {
   try {
     let newArray = [
@@ -18,32 +18,17 @@ router.get("/", async (req, res, next) => {
       "Low FODMAP",
       "Whole 30",
     ];
-
-    newArray.forEach(async (c) => {
-      await TypeOfDiet.create({ name: c });
-    });
-
-    let results = await TypeOfDiet.findAll({});
-
-    res.send(results);
-
-    const dietApi = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=40&addRecipeInformation=true`
-    );
-    const filteredDiets = dietApi.data.results.map((d) => {
-      return {
-        name: d.diets,
-      };
-    });
-    filteredDiets.forEach((e) =>
-      e.name.map((c) => {
+    newArray.forEach((d, index) => {
+      d &&
         TypeOfDiet.findOrCreate({
-          where: { name: c },
+          where: {
+            name: d,
+            id: index + 1,
+          },
         });
-      })
-    );
-    const datos = await TypeOfDiet.findAll({});
-    res.send(datos);
+    });
+    const diets = await TypeOfDiet.findAll({});
+    res.send(diets);
   } catch (error) {
     next(error);
   }

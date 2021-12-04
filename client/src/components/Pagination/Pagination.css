@@ -1,0 +1,19 @@
+.pagbtn {
+  /* display: inline; */
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #90aacb;
+  cursor: pointer;
+  font-weight: 550;
+  height: 2.5rem;
+  border-color: rgba(3, 0, 0, 0.849);
+}
+.pagbtn:focus {
+  background: white;
+  color: rgba(7, 7, 7, 0.651);
+}
+.pagbtn:hover {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.651);
+  transition: 0.1s;
+}
