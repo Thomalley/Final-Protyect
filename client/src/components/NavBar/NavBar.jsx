@@ -15,7 +15,7 @@ export function NavBar() {
           <NavLink className="navLink" to="/">
             Landing Page
           </NavLink>
-          <NavLink className="navLink" to="/AddRecipe">
+          <NavLink className="navLink" to="/Home/AddRecipe">
             New Recipe
           </NavLink>
         </div>

@@ -1,7 +1,9 @@
 const { Router } = require("express");
-const { Recipe, TypeOfDiets } = require("../db");
+const { Recipe, TypeOfDiet } = require("../db");
 const router = Router();
 const axios = require("axios");
+const { v4: uuidv4 } = require("uuid");
+const { Op } = require("sequelize");
 const { apiKey } = process.env;
 router.get("/", async (req, res, next) => {
   try {
@@ -49,7 +51,7 @@ router.get("/", async (req, res, next) => {
         `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`
       );
       recipesDb = await Recipe.findAll({
-        include: TypeOfDiets,
+        include: TypeOfDiet,
       });
       Promise.all([recipesApi, recipesDb]).then((r) => {
         const [recipesApi, recipesDb] = r;
@@ -82,8 +84,7 @@ router.get("/:idReceta", async (req, res, next) => {
     const { idReceta } = req.params;
     let recipe;
     if (typeof idReceta === "string" && idReceta.length > 8) {
-      recipe = await Recipe.findByPk(idReceta, { include: TypeOfDiets });
-      console.log(recipe);
+      recipe = await Recipe.findByPk(idReceta, { include: TypeOfDiet });
       res.send(recipe);
     } else {
       const result = await axios.get(
@@ -99,7 +100,7 @@ router.get("/:idReceta", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { title, summary, spoonacularScore, healthScore, steps, dietsID } =
+    const { title, summary, spoonacularScore, healthScore, steps, diets } =
       req.body;
     const newRecipe = await Recipe.create({
       title,
@@ -107,8 +108,9 @@ router.post("/", async (req, res, next) => {
       spoonacularScore,
       healthScore,
       steps,
+      id: uuidv4(),
     });
-    await newRecipe.addTypeOfDiets(dietsID);
+    await newRecipe.setTypeOfDiets(diets);
     res.send(newRecipe);
   } catch (error) {
     next(error);

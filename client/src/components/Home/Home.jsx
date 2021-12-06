@@ -5,15 +5,13 @@ import Paged from "../Pagination/Pagination";
 import { useSelector } from "react-redux";
 import "./Home.css";
 
-export function Home() {
+export default function Home() {
   const recipes = useSelector((state) => state.filteredRecipes);
   return (
     <div className="allHome">
       <NavBar />
       <Recipes />
-      <Paged className="footer" recipes={recipes} />
+      <Paged className="paged" recipes={recipes} />
     </div>
   );
 }
-
-export default Home;

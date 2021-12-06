@@ -7,6 +7,7 @@ export const SORT_SCORE = "SORT_SCORE";
 export const FILTER_BY_DIET = "FILTER_BY_DIET";
 export const GET_DIETS = "GET_DIETS";
 export const CHANGE_PAGE = "CHANGE_PAGE";
+export const CREATE_RECIPE = "CREATE_RECIPE";
 export function fetchRecipes() {
   return function (dispatch) {
     axios
@@ -92,4 +93,29 @@ export function getDiets() {
 }
 export function changePage(payload) {
   return { type: "CHANGE_PAGE", payload };
+}
+
+export function postRecipe(input) {
+  return async function (dispatch) {
+    try {
+      const newRecipe = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/recipe",
+        data: {
+          title: input.title,
+          summary: input.summary,
+          spoonacularScore: parseInt(input.spoonacularScore),
+          healthScore: parseInt(input.healthScore),
+          steps: input.steps,
+          diets: input.TypeOfDiets,
+        },
+      });
+      return dispatch({
+        type: "CREATE_RECIPE",
+        payload: newRecipe.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }

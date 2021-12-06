@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchRecipes } from "../../redux/actions";
 import Recipe from "../RecipeCard/RecipeCard.jsx";
+import Loading from "../Loading/Loading";
 import "./Recipes.css";
 function Recipes() {
   let recipes = useSelector((state) => state.filteredRecipes);
@@ -20,7 +20,7 @@ function Recipes() {
 
   return (
     <div className="todas">
-      {currentItems &&
+      {currentItems ? (
         currentItems.map((r, id) => (
           <div className="cards" key={id}>
             <Recipe
@@ -31,7 +31,10 @@ function Recipes() {
               spoonacularScore={r.spoonacularScore}
             />
           </div>
-        ))}
+        ))
+      ) : (
+        <div>{Loading}</div>
+      )}
     </div>
   );
 }

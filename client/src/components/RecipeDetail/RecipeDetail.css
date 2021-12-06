@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.titleDetail {
+  display: flex;
+  height: 64px;
+  font-size: 18px;
+  font-weight: 0;
+  justify-content: start;
+  align-items: center;
+  border-radius: 5px;
+  width: auto;
+  padding: 5px;
+  border: 2px solid white;
+}
+
+.navDetail {
+  display: flex;
+  padding: 8px;
+  z-index: 1;
+  justify-content: space-around;
+  width: 100%;
+  background: #4e68db; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #86fde8,
+    #4e68db
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #86fde8,
+    #4e68db
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.navDetail a {
+  display: inline-block;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 1px;
+  border: 2px solid white;
+  width: 125px;
+  border-radius: 3px;
+  text-align: center;
+  padding: 10px 0;
+}
+.headerDetail {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  background-image: url("./1184106-coffee.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  height: 100vh;
+  width: 100%;
+  padding: 0px 12px;
+  text-align: start;
+}
+.containerDetail {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  width: 50%;
+  flex-direction: column;
+  padding-left: 180px;
+  height: 100%;
+  overflow: scroll;
+}
+.imgDetail {
+  height: 250px;
+}
+.summaryDetail {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  padding: 0;
+  margin: 0;
+}

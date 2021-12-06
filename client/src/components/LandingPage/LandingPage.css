@@ -10,13 +10,6 @@
   left: 20px;
 }
 
-.contacto a {
-  color: white;
-  text-decoration: none;
-  display: inline-block;
-  animation: moverIzquierda 1s ease-in;
-  font-weight: 600;
-}
 .header {
   background: #7f7fd5; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -132,7 +125,7 @@
   .tostadita {
     height: 250px;
     width: 330px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
   }
   .containerLand {
     flex-wrap: wrap;

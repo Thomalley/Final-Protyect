@@ -11,10 +11,11 @@
   height: 64px;
   display: flex;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 0;
   justify-content: center;
   align-items: center;
+  /* overflow: hidden; */
 }
 .containerCard .imgCard {
   width: 330px;
@@ -38,6 +39,7 @@
 .diets {
   height: 64px;
   overflow: hidden;
+  font-size: 14px;
 }
 .scoreCard {
 }
