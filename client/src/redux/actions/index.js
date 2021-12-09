@@ -107,7 +107,7 @@ export function postRecipe(input) {
           spoonacularScore: parseInt(input.spoonacularScore),
           healthScore: parseInt(input.healthScore),
           steps: input.steps,
-          diets: input.TypeOfDiets,
+          diets: input.diets,
         },
       });
       return dispatch({

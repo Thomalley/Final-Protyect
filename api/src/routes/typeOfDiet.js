@@ -6,17 +6,11 @@ const router = Router();
 router.get("/", async (req, res, next) => {
   try {
     let newArray = [
-      "Gluten Free",
-      "Ketogenic",
-      "Vegetarian",
-      "Lacto-Vegetarian",
-      "Ovo-Vegetarian",
-      "Vegan",
-      "Pescetarian",
-      "Paleo",
-      "Primal",
-      "Low FODMAP",
-      "Whole 30",
+      "gluten free",
+      "vegan",
+      "primal",
+      "whole 30",
+      //      "ketogenic",vegetarian,       "lacto-vegetarian", "ovo-vegetarian",       "pescetarian",       "paleo",       "low FODMAP", NO FILTRAN NI ESTAN EN LAS DIETAS DE LAS RECETAS
     ];
     newArray.forEach((d, index) => {
       d &&

@@ -11,22 +11,24 @@ export function validate(input) {
   if (!input.summary) {
     errors.summary = "Summary is required";
   }
-  if (!input.score) {
-    errors.score = "Score is required";
-    if (input.score < 0 || input.score > 100) {
-      errors.score = "Only numbers from 0 to 100";
-    }
+  if (!input.spoonacularScore) {
+    errors.spoonacularScore = "Score is required";
   }
-  if (!input.health) {
-    errors.health = "Health is required";
-    if (input.health < 0 || input.health > 100) {
-      errors.health = "Only numbers from 0 to 100";
-    }
+  if (input.spoonacularScore < 0 || input.spoonacularScore > 100) {
+    errors.spoonacularScore = "Only numbers from 0 to 100";
+  }
+  if (!input.healthScore) {
+    errors.healthScore = "Health is required";
+  }
+  if (input.healthScore < 0 || input.healthScore > 100) {
+    errors.healthScore = "Only numbers from 0 to 100";
   }
   if (!input.steps) {
     errors.steps = "Steps are required";
   }
-
+  // if (!input.image) {
+  //   errors.steps = "image is required";
+  // }
   return errors;
 }
 
@@ -37,10 +39,10 @@ export default function AddRecipe() {
   const [value, setValue] = useState({
     title: "",
     summary: "",
-    score: "",
-    health: "",
+    spoonacularScore: "",
+    healthScore: "",
     steps: "",
-
+    // image: "",
     diets: [],
   });
   const [temporal, setTemporal] = useState([]);
@@ -48,9 +50,9 @@ export default function AddRecipe() {
     dispatch(getDiets());
   }, []);
   useEffect(() => {
-    if (temporal.length) {
+    if (temporal.length > 0) {
       let total = diets.reduce((acc, el) => {
-        if (temporal.includes(el.name) === true) {
+        if (temporal.includes(el.name)) {
           acc.push(el.id);
         }
         return acc;
@@ -58,30 +60,37 @@ export default function AddRecipe() {
       setValue({ ...value, diets: total });
     }
   }, [temporal]);
-
   const handleOnChange = (e) => {
     setValue({
       ...value,
       [e.target.name]: e.target.value,
     });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
     setErrors(
       validate({
         ...value,
         [e.target.name]: e.target.value,
       })
     );
+  };
+
+  function handleDelete(e) {
+    let filteredD = temporal.filter((t) => t !== e);
+    setTemporal(filteredD);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (Object.keys(errors).length === 0) {
       dispatch(postRecipe(value));
     }
+    setTemporal([]);
     setValue({
       title: "",
       summary: "",
-      score: "",
-      health: "",
+      spoonacularScore: "",
+      healthScore: "",
       steps: "",
+      // image: "",
       diets: [],
     });
   };
@@ -90,75 +99,91 @@ export default function AddRecipe() {
     if (temporal.includes(e.target.value)) {
       alert("This diet has alredy been selected");
     } else {
-      let arreglo = [];
-      const alonso = arreglo.push(e.target.value);
-      setTemporal([...temporal, arreglo]);
+      setTemporal([...temporal, e.target.value]);
     }
-    console.log(e.target.value);
   };
-  console.log("acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", temporal);
+
   return (
     <div>
       <nav className="navForm">
         <a href="/Home">Home</a>
       </nav>
-      <form onSubmit={handleSubmit} className="input">
-        <label> Title: </label>
+      <div className="containerForm">
+        <form onSubmit={handleSubmit} className="inputForm">
+          <label> Title: </label>
+          <input
+            className={errors.title && "danger"}
+            type="text"
+            name="title"
+            onChange={handleOnChange}
+            value={value.title}
+          />
+          {errors.title && <p className="danger">{errors.title}</p>}
+          <label> Summary: </label>
+          <input
+            className={errors.summary && "danger"}
+            type="text"
+            name="summary"
+            onChange={handleOnChange}
+            value={value.summary}
+          />
+          {errors.summary && <p className="danger">{errors.summary}</p>}
+          <label> Score: </label>
+          <input
+            className={errors.score && "danger"}
+            type="number"
+            name="spoonacularScore"
+            onChange={handleOnChange}
+            value={value.spoonacularScore}
+          />
+          {errors.spoonacularScore && (
+            <p className="danger">{errors.spoonacularScore}</p>
+          )}
+          <label> Health score: </label>
+          <input
+            className={errors.healthScore && "danger"}
+            type="number"
+            name="healthScore"
+            onChange={handleOnChange}
+            value={value.healthScore}
+          />
+          {errors.healthScore && <p className="danger">{errors.healthScore}</p>}
+          <label> Steps: </label>
+          <input
+            className={errors.steps && "danger"}
+            type="text"
+            name="steps"
+            onChange={handleOnChange}
+            value={value.steps}
+          />
+          {errors.steps && <p className="danger">{errors.steps}</p>}
+          {/* <label> image: </label>
         <input
-          className={errors.title && "danger"}
+          className={errors.image && "danger"}
           type="text"
-          name="title"
+          name="image"
           onChange={handleOnChange}
-          value={value.title}
+          value={value.image}
         />
-        {errors.title && <p className="danger">{errors.title}</p>}
-        <label> Summary: </label>
-        <input
-          clasName={errors.summary && "danger"}
-          type="text"
-          name="summary"
-          onChange={handleOnChange}
-          value={value.summary}
-        />
-        {errors.summary && <p className="danger">{errors.summary}</p>}
-        <label> Score: </label>
-        <input
-          className={errors.score && "danger"}
-          type="text"
-          name="score"
-          onChange={handleOnChange}
-          value={value.score}
-        />
-        {errors.score && <p className="danger">{errors.score}</p>}
-        <label> Health score: </label>
-        <input
-          className={errors.health && "danger"}
-          type="text"
-          name="health"
-          onChange={handleOnChange}
-          value={value.health}
-        />
-        {errors.health && <p className="danger">{errors.health}</p>}
-        <label> Steps: </label>
-        <input
-          className={errors.steps && "danger"}
-          type="text"
-          name="steps"
-          onChange={handleOnChange}
-          value={value.steps}
-        />
-        {errors.steps && <p className="danger">{errors.steps}</p>}
-        <p> Choose the type of diet: </p>
-        <select onChange={(e) => handleSelect(e)}>
-          {diets &&
-            diets.map((d) => (
-              <option value={d.name} key={d.id}>
-                {d.name}
-              </option>
-            ))}
-        </select>
-        <button type="submit">Create</button>
-      </form>
+        {errors.image && <p className="danger">{errors.image}</p>} */}
+          <p> Choose the type of diet: </p>
+          <select onChange={(e) => handleSelect(e)}>
+            {diets &&
+              diets.map((d) => (
+                <option value={d.name} key={d.id}>
+                  {d.name}
+                </option>
+              ))}
+          </select>
+          <button type="submit">Create</button>
+        </form>
+        {temporal.map((t) => (
+          <div>
+            <p>{t}</p>
+            <button onClick={() => handleDelete(t)}>x</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

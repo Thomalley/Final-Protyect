@@ -32,22 +32,3 @@ export default function SearchBar() {
     </div>
   );
 }
-
-//   function click() {
-//     search.classList.toggle("activate");
-//   }
-//   return (
-//     <div>
-//       {pathname.toLowerCase() === "/home" ? (
-//         <body class="cuerpo">
-//           <div class="search">
-//             <div class="icon" onClick={click}></div>
-//             <div class="input"></div>
-//           </div>
-//         </body>
-//       ) : (
-//         <div></div>
-//       )}
-//     </div>
-//   );
-// }

@@ -13,18 +13,16 @@ module.exports = (sequelize) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     summary: {
       type: DataTypes.TEXT,
       allowNull: false,
-      unique: true,
     },
     spoonacularScore: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
     healthScore: {
-      type: DataTypes.TEXT,
+      type: DataTypes.INTEGER,
     },
     steps: {
       type: DataTypes.TEXT,
@@ -32,8 +30,13 @@ module.exports = (sequelize) => {
     dishTypes: {
       type: DataTypes.TEXT,
     },
-    image: {
-      type: DataTypes.STRING,
+    // image: {
+    //   type: DataTypes.STRING,
+    // },
+    createdInDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
   });
 };

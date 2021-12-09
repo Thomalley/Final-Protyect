@@ -4,18 +4,16 @@
   box-sizing: border-box;
 }
 .allHome {
-  background: #4e68db; /* fallback for old browsers */
+  background: #ff9966; /* fallback for old browsers */
   background: -webkit-linear-gradient(
-    to top,
-    #a5fecb,
-    #20bdff,
-    #4e68db
+    to right,
+    #ff5e62,
+    #ff9966
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
-    to top,
-    #a5fecb,
-    #20bdff,
-    #4e68db
+    to right,
+    #ff5e62,
+    #ff9966
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .paged {

@@ -11,41 +11,49 @@ router.get("/", async (req, res, next) => {
     let recipesApi;
     let recipesDb;
     if (name) {
-      recipesApi = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=${apiKey}&number=100&addRecipeInformation=true`
-      );
-      recipesDb = await Recipe.findAll({
-        where: {
-          title: name,
-        },
-      });
-      Promise.all([recipesApi, recipesDb]).then((r) => {
-        const [recipesApi, recipesDb] = r;
-        console.log(recipesApi);
-        let filteredRecipesApi = recipesApi.data.results.map((c) => {
-          return {
-            id: c.id,
-            title: c.title,
-            summary: c.summary,
-            spoonacularScore: c.spoonacularScore,
-            healthScore: c.healthScore,
-            steps: c.analyzedInstructions.map((d) =>
-              d.steps.map((c) => c.step)
-            ),
-            diets: c.diets,
-            image: c.image,
-          };
+      try {
+        recipesDb = await Recipe.findAll({
+          where: {
+            title: name,
+          },
+          include: TypeOfDiet,
         });
-        const varias = [...filteredRecipesApi, ...recipesDb];
-        // el rest operator concatena ambos arrays para devolverme todo en una sola request y el ".data.results" hace que se pueda iterar sobre todos los resultados que se estan filtrando por la query
-        if (varias.length === 0) {
-          return res
-            .status(404)
-            .send("No se encontró ninguna receta con el parametro ingresado");
+        if (recipesDb.length !== 0) {
+          let filteredRecipesDB = recipesDb.map((e) => {
+            return {
+              id: e.id,
+              title: e.title,
+              summary: e.summary,
+              spoonacularScore: e.spoonacularScore,
+              healthScore: e.healthScore,
+              steps: e.steps,
+              diets: e.TypeOfDiets.map((a) => a.name),
+            };
+          });
+          return res.send(filteredRecipesDB);
         } else {
-          res.send(varias);
+          recipesApi = await axios.get(
+            `https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=${apiKey}&number=100&addRecipeInformation=true`
+          );
+          let filteredRecipesApi = recipesApi.data.results.map((c) => {
+            return {
+              id: c.id,
+              title: c.title,
+              summary: c.summary,
+              spoonacularScore: c.spoonacularScore,
+              healthScore: c.healthScore,
+              steps: c.analyzedInstructions.map((d) =>
+                d.steps.map((c) => c.step)
+              ),
+              diets: c.diets,
+              image: c.image,
+            };
+          });
+          res.send(filteredRecipesApi);
         }
-      });
+      } catch (error) {
+        res.send("No existe ninguna receta con el nombre ingresado");
+      }
     } else {
       recipesApi = await axios.get(
         `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`
@@ -70,7 +78,18 @@ router.get("/", async (req, res, next) => {
             image: c.image,
           };
         });
-        const data = [...filteredRecipesApi, ...recipesDb];
+        let filteredRecipesDB = recipesDb.map((e) => {
+          return {
+            id: e.id,
+            title: e.title,
+            summary: e.summary,
+            spoonacularScore: e.spoonacularScore,
+            healthScore: e.healthScore,
+            steps: e.steps,
+            diets: e.TypeOfDiets.map((a) => a.name),
+          };
+        });
+        const data = [...filteredRecipesApi, ...filteredRecipesDB];
         res.send(data);
       });
     }
@@ -85,7 +104,7 @@ router.get("/:idReceta", async (req, res, next) => {
     let recipe;
     if (typeof idReceta === "string" && idReceta.length > 8) {
       recipe = await Recipe.findByPk(idReceta, { include: TypeOfDiet });
-      res.send(recipe);
+      return res.send(recipe);
     } else {
       const result = await axios.get(
         `https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${apiKey}&number=100`
@@ -100,18 +119,27 @@ router.get("/:idReceta", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { title, summary, spoonacularScore, healthScore, steps, diets } =
-      req.body;
-    const newRecipe = await Recipe.create({
+    const {
       title,
       summary,
       spoonacularScore,
       healthScore,
       steps,
-      id: uuidv4(),
+      diets,
+      // image,
+    } = req.body;
+    const newRecipe = await Recipe.create({
+      title,
+      // image,
+      summary,
+      spoonacularScore,
+      healthScore,
+      steps,
     });
-    await newRecipe.setTypeOfDiets(diets);
-    res.send(newRecipe);
+
+    await newRecipe.addTypeOfDiets(diets);
+
+    res.json(newRecipe);
   } catch (error) {
     next(error);
   }

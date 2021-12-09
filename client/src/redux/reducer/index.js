@@ -17,6 +17,7 @@ const initialState = {
   diets: [],
   currentPage: 1,
   cardsPP: 9,
+  error: false,
 };
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -27,10 +28,18 @@ export default function rootReducer(state = initialState, action) {
         filteredRecipes: action.payload,
       };
     case SEARCH_RECIPES:
-      return {
-        ...state,
-        filteredRecipes: action.payload,
-      };
+      if (action.payload.length === 0) {
+        return {
+          ...state,
+          filteredRecipes: action.payload,
+          error: true,
+        };
+      } else {
+        return {
+          ...state,
+          filteredRecipes: action.payload,
+        };
+      }
     case SEARCH_RECIPES_ID:
       return {
         ...state,
@@ -47,11 +56,15 @@ export default function rootReducer(state = initialState, action) {
         currentPage: action.payload,
       };
     case FILTER_BY_DIET:
-      const recipes = state.recipes;
+      const recetas = state.recipes;
+      console.log(recetas);
       const filteredR =
         action.payload === "all"
-          ? recipes
-          : recipes.filter((e) => e.diets.includes(action.payload));
+          ? recetas
+          : recetas.filter((e) =>
+              e.diets.includes(action.payload.toLowerCase())
+            );
+      console.log(filteredR);
       if (filteredR.length > 0) {
         return {
           ...state,
@@ -60,7 +73,7 @@ export default function rootReducer(state = initialState, action) {
       } else {
         return {
           ...state,
-          filteredRecipes: filteredR,
+          filteredRecipes: recetas,
         };
       }
     case SORT:

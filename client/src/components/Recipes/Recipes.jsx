@@ -9,8 +9,9 @@ function Recipes() {
   let recipes = useSelector((state) => state.filteredRecipes);
   let dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchRecipes());
+    if (!error) dispatch(fetchRecipes());
   }, []);
+  const error = useSelector((state) => state.error);
   const currentPage = useSelector((state) => state.currentPage);
   const cardsPP = useSelector((state) => state.cardsPP);
 
@@ -20,7 +21,8 @@ function Recipes() {
 
   return (
     <div className="todas">
-      {currentItems ? (
+      {!error ? (
+        currentItems &&
         currentItems.map((r, id) => (
           <div className="cards" key={id}>
             <Recipe
@@ -33,7 +35,7 @@ function Recipes() {
           </div>
         ))
       ) : (
-        <div>{Loading}</div>
+        <div>Recipe not found</div>
       )}
     </div>
   );
