@@ -6,6 +6,7 @@
 
 .navForm {
   display: flex;
+  flex-grow: 0;
   align-items: center;
   padding: 8px;
   top: 0;
@@ -37,14 +38,6 @@
   text-align: center;
   padding: 10px 0;
 }
-.containerForm {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 500px;
-  margin: 0 auto;
-}
 .inputForm {
   width: 500px;
   padding-top: 10px;
@@ -56,4 +49,33 @@ p.danger {
 
 input.danger {
   border: 2px solid red;
+}
+.inputForm {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+}
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px;
+  margin: 0 auto;
+}
+.contenedorForm {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-image: url("./1184106-coffee.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  height: 100vh;
+  width: 100%;
+  padding: 0px 12px;
+  text-align: start;
 }

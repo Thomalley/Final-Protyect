@@ -8,6 +8,7 @@ export const FILTER_BY_DIET = "FILTER_BY_DIET";
 export const GET_DIETS = "GET_DIETS";
 export const CHANGE_PAGE = "CHANGE_PAGE";
 export const CREATE_RECIPE = "CREATE_RECIPE";
+export const FILTER_BY_SCORE = "FILTER_BY_SCORE";
 export function fetchRecipes() {
   return function (dispatch) {
     axios
@@ -72,6 +73,13 @@ export function sortScore(order) {
 export function filterByDiet(payload) {
   return {
     type: FILTER_BY_DIET,
+    payload,
+  };
+}
+
+export function filterByScore(payload) {
+  return {
+    type: FILTER_BY_SCORE,
     payload,
   };
 }

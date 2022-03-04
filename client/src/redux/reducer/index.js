@@ -9,6 +9,7 @@ import {
   FILTER_BY_DIET,
   GET_DIETS,
   CHANGE_PAGE,
+  FILTER_BY_SCORE,
 } from "../actions";
 
 const initialState = {
@@ -57,14 +58,12 @@ export default function rootReducer(state = initialState, action) {
       };
     case FILTER_BY_DIET:
       const recetas = state.recipes;
-      console.log(recetas);
       const filteredR =
         action.payload === "all"
           ? recetas
           : recetas.filter((e) =>
               e.diets.includes(action.payload.toLowerCase())
             );
-      console.log(filteredR);
       if (filteredR.length > 0) {
         return {
           ...state,
@@ -76,6 +75,23 @@ export default function rootReducer(state = initialState, action) {
           filteredRecipes: recetas,
         };
       }
+
+    case FILTER_BY_SCORE:
+      const recetas2 = state.recipes;
+      const filteredS =
+        recetas2 && recetas2.filter((e) => e.spoonacularScore < 95);
+      if (filteredS.length > 0) {
+        return {
+          ...state,
+          filteredRecipes: filteredS,
+        };
+      } else {
+        return {
+          ...state,
+          filteredRecipes: recetas2,
+        };
+      }
+
     case SORT:
       let orderedRecipes = [...state.filteredRecipes];
       orderedRecipes = orderedRecipes.sort((a, b) => {

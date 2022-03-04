@@ -104,85 +104,80 @@ export default function AddRecipe() {
   };
 
   return (
-    <div>
+    <div className="allForm">
       <nav className="navForm">
         <a href="/Home">Home</a>
       </nav>
-      <div className="containerForm">
-        <form onSubmit={handleSubmit} className="inputForm">
-          <label> Title: </label>
-          <input
-            className={errors.title && "danger"}
-            type="text"
-            name="title"
-            onChange={handleOnChange}
-            value={value.title}
-          />
-          {errors.title && <p className="danger">{errors.title}</p>}
-          <label> Summary: </label>
-          <input
-            className={errors.summary && "danger"}
-            type="text"
-            name="summary"
-            onChange={handleOnChange}
-            value={value.summary}
-          />
-          {errors.summary && <p className="danger">{errors.summary}</p>}
-          <label> Score: </label>
-          <input
-            className={errors.score && "danger"}
-            type="number"
-            name="spoonacularScore"
-            onChange={handleOnChange}
-            value={value.spoonacularScore}
-          />
-          {errors.spoonacularScore && (
-            <p className="danger">{errors.spoonacularScore}</p>
-          )}
-          <label> Health score: </label>
-          <input
-            className={errors.healthScore && "danger"}
-            type="number"
-            name="healthScore"
-            onChange={handleOnChange}
-            value={value.healthScore}
-          />
-          {errors.healthScore && <p className="danger">{errors.healthScore}</p>}
-          <label> Steps: </label>
-          <input
-            className={errors.steps && "danger"}
-            type="text"
-            name="steps"
-            onChange={handleOnChange}
-            value={value.steps}
-          />
-          {errors.steps && <p className="danger">{errors.steps}</p>}
-          {/* <label> image: </label>
-        <input
-          className={errors.image && "danger"}
-          type="text"
-          name="image"
-          onChange={handleOnChange}
-          value={value.image}
-        />
-        {errors.image && <p className="danger">{errors.image}</p>} */}
-          <p> Choose the type of diet: </p>
-          <select onChange={(e) => handleSelect(e)}>
-            {diets &&
-              diets.map((d) => (
-                <option value={d.name} key={d.id}>
-                  {d.name}
-                </option>
-              ))}
-          </select>
-          <button type="submit">Create</button>
-        </form>
-        {temporal.map((t) => (
-          <div>
-            <p>{t}</p>
-            <button onClick={() => handleDelete(t)}>x</button>
-          </div>
-        ))}
+      <div className="contenedorForm">
+        <div className="containerForm">
+          <form onSubmit={handleSubmit} className="inputForm">
+            <label> Title: </label>
+            <input
+              className={errors.title && "danger"}
+              type="text"
+              name="title"
+              onChange={handleOnChange}
+              value={value.title}
+            />
+            {errors.title && <p className="danger">{errors.title}</p>}
+            <label> Summary: </label>
+            <input
+              className={errors.summary && "danger"}
+              type="text"
+              name="summary"
+              onChange={handleOnChange}
+              value={value.summary}
+            />
+            {errors.summary && <p className="danger">{errors.summary}</p>}
+            <label> Score: </label>
+            <input
+              className={errors.score && "danger"}
+              type="number"
+              name="spoonacularScore"
+              onChange={handleOnChange}
+              value={value.spoonacularScore}
+            />
+            {errors.spoonacularScore && (
+              <p className="danger">{errors.spoonacularScore}</p>
+            )}
+            <label> Health score: </label>
+            <input
+              className={errors.healthScore && "danger"}
+              type="number"
+              name="healthScore"
+              onChange={handleOnChange}
+              value={value.healthScore}
+            />
+            {errors.healthScore && (
+              <p className="danger">{errors.healthScore}</p>
+            )}
+            <label> Steps: </label>
+            <input
+              className={errors.steps && "danger"}
+              type="text"
+              name="steps"
+              onChange={handleOnChange}
+              value={value.steps}
+            />
+            {errors.steps && <p className="danger">{errors.steps}</p>}
+            <p> Choose the type of diet: </p>
+            <select onChange={(e) => handleSelect(e)}>
+              {diets &&
+                diets.map((d) => (
+                  <option value={d.name} key={d.id}>
+                    {d.name}
+                  </option>
+                ))}
+            </select>
+            <button type="submit">Create</button>
+          </form>
+          {temporal.map((t) => (
+            <div>
+              <p>{t}</p>
+              <button onClick={() => handleDelete(t)}>x</button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
